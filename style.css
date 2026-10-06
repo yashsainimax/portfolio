@@ -696,17 +696,19 @@ footer p{
 }
 
 .project-card{
-    background:#161b22;
+    background:linear-gradient(145deg,#161b22,#0d1422);
     border:1px solid rgba(255,255,255,.08);
     border-radius:20px;
     overflow:hidden;
     transition:.4s;
+    backdrop-filter:blur(10px);
+box-shadow:0 15px 40px rgba(0,0,0,.35);
 }
 
 .project-card:hover{
-    transform:translateY(-10px);
+    transform:translateY(-12px);
     border-color:#00d4ff;
-    box-shadow:0 0 30px rgba(0,212,255,.35);
+    box-shadow:0 20px 45px rgba(0,212,255,.35);
 }
 
 .project-card img{
@@ -728,7 +730,7 @@ footer p{
     line-height:1.7;
 }
 
-.project-buttons
+
 /*================ ACHIEVEMENTS ================*/
 
 .achievements{
@@ -1103,7 +1105,13 @@ padding-bottom: 5px;}
     background-color: #0056b3;
     transform: translateY(-2px);
 }
+
+.project-card{
+    position :relative;
+    padding:25px;
+}
 .project-card .btn{
+    display:inline-block;
 margin:5px;
 }
 @media (max-width:600px){
