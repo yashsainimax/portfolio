@@ -1,176 +1,126 @@
-// ==============================
-// Welcome Button
-// ==============================
+/* =========================
+   MOBILE MENU
+========================= */
 
-function showmessage() {
-    alert("Welcome Yash! Thanks for visiting my website.");
+const menuBtn = document.querySelector(".menu-btn");
+const navLinks = document.querySelector(".nav-links");
+
+if(menuBtn){
+
+    menuBtn.addEventListener("click", function(){
+
+        navLinks.classList.toggle("show-menu");
+
+    });
+
 }
 
-// ==============================
-// Hero Typing Effect
-// ==============================
 
-const typing = document.getElementById("typing");
+/* =========================
+   CLOSE MOBILE MENU
+========================= */
 
-const words = [
-    "Future Full Stack Web Developer",
-    "Frontend Developer",
-    "JavaScript Learner",
-    "Problem Solver"
-];
+document.querySelectorAll(".nav-links a").forEach(function(link){
 
-let wordIndex = 0;
-let charIndex = 0;
-let deleting = false;
+    link.addEventListener("click", function(){
 
-function typeEffect() {
+        navLinks.classList.remove("show-menu");
 
-    if (!typing) return;
-
-    const currentWord = words[wordIndex];
-
-    if (!deleting) {
-        typing.textContent = currentWord.substring(0, charIndex++);
-    } else {
-        typing.textContent = currentWord.substring(0, charIndex--);
-    }
-
-    let speed = deleting ? 60 : 120;
-
-    if (!deleting && charIndex > currentWord.length) {
-        deleting = true;
-        speed = 1500;
-    }
-
-    if (deleting && charIndex < 0) {
-        deleting = false;
-        wordIndex = (wordIndex + 1) % words.length;
-        charIndex = 0;
-    }
-
-    setTimeout(typeEffect, speed);
-}
-
-typeEffect();
-
-// ==============================
-// Projects
-// ==============================
-
-function portfolioProject() {
-    alert("This is my Portfolio Website built using HTML, CSS and JavaScript.");
-}
-
-function calculatorProject() {
-    alert("Calculator Project Coming Soon!");
-}
-
-// ==============================
-// Contact Form
-// ==============================
-
-function validateForm() {
-
-    const name = document.querySelector('input[type="text"]');
-    const email = document.querySelector('input[type="email"]');
-
-    if (!name.value || !email.value) {
-        alert("Please fill all required fields.");
-        return false;
-    }
-
-    alert("Form Submitted Successfully!");
-    return true;
-}
-
-// ==============================
-// Dark Mode
-// ==============================
-
-function darkMode() {
-    document.body.classList.toggle("dark");
-}
-
-// ==============================
-// Scroll To Top Button
-// ==============================
-
-const topBtn = document.getElementById("topBtn");
-
-window.addEventListener("scroll", () => {
-
-    if (!topBtn) return;
-
-    if (window.scrollY > 200) {
-        topBtn.style.display = "block";
-    } else {
-        topBtn.style.display = "none";
-    }
+    });
 
 });
 
-function topFunction() {
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
+
+/* =========================
+   PROJECT FILTER
+========================= */
+
+const filters = document.querySelectorAll(".filter");
+const projects = document.querySelectorAll(".project-card");
+
+filters.forEach(function(filter){
+
+    filter.addEventListener("click", function(){
+
+        filters.forEach(function(item){
+            item.classList.remove("active");
+        });
+
+        filter.classList.add("active");
+
+        const selected = filter.getAttribute("data-filter");
+
+        projects.forEach(function(project){
+
+            const category = project.getAttribute("data-category");
+
+            if(selected === "all" || category === selected){
+
+                project.style.display = "block";
+
+            }else{
+
+                project.style.display = "none";
+
+            }
+
+        });
+
     });
+
+});
+
+
+/* =========================
+   CONTACT FORM
+========================= */
+
+const contactForm = document.getElementById("contactForm");
+
+if(contactForm){
+
+    contactForm.addEventListener("submit", function(event){
+
+        event.preventDefault();
+
+        alert("Thanks! Your message has been received.");
+
+        contactForm.reset();
+
+    });
+
 }
 
-// ==============================
-// Scroll Reveal Animation
-// ==============================
 
-const reveals = document.querySelectorAll(".reveal");
+/* =========================
+   SCROLL REVEAL
+========================= */
 
-function revealSections() {
+const revealElements = document.querySelectorAll(
+    ".section-heading, .about-grid, .skill-card, .project-card, .service-card, .journey-grid, .trust-card, .contact-grid"
+);
 
-    reveals.forEach(section => {
+const observer = new IntersectionObserver(function(entries){
 
-        const revealTop = section.getBoundingClientRect().top;
-        const revealPoint = 120;
+    entries.forEach(function(entry){
 
-        if (revealTop < window.innerHeight - revealPoint) {
-            section.classList.add("active");
+        if(entry.isIntersecting){
+
+            entry.target.classList.add("show");
+
         }
 
     });
 
-}
+},{
+    threshold:0.1
+});
 
-window.addEventListener("scroll", revealSections);
-revealSections();
-// ==============================
-// Active Navbar
-// ==============================
 
-const sections = document.querySelectorAll("section");
-const navLinks = document.querySelectorAll("nav a");
+revealElements.forEach(function(element){
 
-window.addEventListener("scroll", () => {
+    element.classList.add("reveal");
 
-    let current = "";
-
-    sections.forEach(section => {
-
-        const sectionTop = section.offsetTop - 150;
-        const sectionHeight = section.offsetHeight;
-
-        if (window.scrollY >= sectionTop &&
-            window.scrollY < sectionTop + sectionHeight) {
-
-            current = section.getAttribute("id");
-        }
-
-    });
-
-    navLinks.forEach(link => {
-
-        link.classList.remove("active");
-
-        if (link.getAttribute("href") === "#" + current) {
-            link.classList.add("active");
-        }
-
-    });
+    observer.observe(element);
 
 });
